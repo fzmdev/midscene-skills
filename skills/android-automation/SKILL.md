@@ -176,4 +176,5 @@ npx @midscene/android@1 take_screenshot
 | **Device shows "offline"** | Disconnect and reconnect the USB cable. Run `adb kill-server && adb start-server`. |
 | **Command timeout** | The device screen may be off or locked. Wake the device with `adb shell input keyevent KEYCODE_WAKEUP` and unlock it. |
 | **API key error** | Check `.env` file contains `MIDSCENE_MODEL_API_KEY=<your-key>`. See [Model Configuration](https://midscenejs.com/zh/model-common-config.html). |
+| **`@midscene/*` dependency version is outdated** | Check local versions with `npm ls @midscene/android @midscene/core @midscene/shared` (or `pnpm why @midscene/android`). Compare with latest versions using `npm view @midscene/android version`, `npm view @midscene/core version`, and `npm view @midscene/shared version`. Upgrade as needed (`npm i @midscene/android@latest @midscene/core@latest @midscene/shared@latest`). |
 | **Wrong device targeted** | If multiple devices are connected, use `--deviceId <id>` flag with the `connect` command. |

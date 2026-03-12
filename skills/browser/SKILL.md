@@ -250,5 +250,10 @@ npx @midscene/web@1 take_screenshot
 - Web pages may take time to load. After connecting, take a screenshot to verify readiness before interacting.
 - For slow pages, wait briefly between steps.
 
+### `@midscene/*` Dependency Version Outdated
+- Check local versions: `npm ls @midscene/web @midscene/core @midscene/shared` (or `pnpm why @midscene/web`).
+- Check latest versions: `npm view @midscene/web version`, `npm view @midscene/core version`, `npm view @midscene/shared version`.
+- Upgrade dependencies: `npm i @midscene/web@latest @midscene/core@latest @midscene/shared@latest`.
+
 ### Screenshots Not Displaying
 - The screenshot path is an absolute path to a local file. Use the Read tool to view it.
