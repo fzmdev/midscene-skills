@@ -6,6 +6,8 @@ description: |
   Runs in a headless Puppeteer browser — does NOT take over the user's mouse or keyboard. The user can continue using their computer while automation runs.
   This is the preferred skill for testing web applications. Only use "Desktop Computer Automation" for native desktop apps.
 
+  Also supports CDP (Chrome DevTools Protocol) mode — connect to an existing Chrome browser started with --remote-debugging-port, including remote browsers in Docker or CI environments.
+
   Use this skill when the user wants to:
   - Browse, navigate, or open web pages
   - Scrape, extract, or collect data from websites
@@ -14,6 +16,8 @@ description: |
   - Take screenshots of web pages
   - Automate multi-step web workflows
   - Test what was just built, see if it works in browser
+  - Connect to an existing Chrome via CDP, DevTools Protocol, or remote debugging
+  - Automate a remote browser in Docker, cloud, or CI environment
 
   Powered by Midscene.js (https://midscenejs.com)
 allowed-tools:
@@ -29,7 +33,7 @@ allowed-tools:
 > 3. **Allow enough time for each command to complete.** Midscene commands involve AI inference and screen interaction, which can take longer than typical shell commands. A typical command needs about 1 minute; complex `act` commands may need even longer.
 > 4. **Always report task results before finishing.** After completing the automation task, you MUST proactively summarize the results to the user — including key data found, actions completed, screenshots taken, and any relevant findings. Never silently end after the last automation step; the user expects a complete response in a single interaction.
 
-Automate web browsing using `npx @midscene/web@1`. Launches a headless Chrome via Puppeteer that **persists across CLI calls** — no session loss between commands. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
+Automate web browsing using `npx @midscene/web@1`. By default, launches a headless Chrome via Puppeteer that **persists across CLI calls** — no session loss between commands. Also supports **CDP mode** to connect to an existing Chrome browser. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
 ## What `act` Can Do
 
@@ -44,6 +48,8 @@ Use this skill when:
 - The user wants screenshots of web pages
 
 If you need to preserve login sessions or work with the user's existing browser tabs, use the **Chrome Bridge Automation** skill instead.
+
+If the user has a Chrome browser already running with `--remote-debugging-port` (or provides a CDP WebSocket endpoint), use **CDP mode** (see below).
 
 ## Prerequisites
 
@@ -91,6 +97,30 @@ MIDSCENE_MODEL_FAMILY="doubao-seed"
 Commonly used models: Doubao Seed 2.0 Lite, Qwen 3.5, Zhipu GLM-4.6V, Gemini-3-Pro, Gemini-3-Flash.
 
 If the model is not configured, ask the user to set it up. See [Model Configuration](https://midscenejs.com/model-common-config) for supported providers.
+
+## CDP Mode (Connect to Existing Browser)
+
+If the user provides a CDP/WebSocket endpoint or mentions "remote debugging", "CDP", or "DevTools Protocol", use CDP mode by adding `--cdp <ws-endpoint>` to every command:
+
+```bash
+# Get the CDP endpoint from a Chrome started with --remote-debugging-port=9222
+curl -s http://localhost:9222/json/version | grep webSocketDebuggerUrl
+
+# Then use --cdp with every command
+npx @midscene/web@1 --cdp ws://localhost:9222/devtools/browser/xxx connect --url https://example.com
+npx @midscene/web@1 --cdp ws://localhost:9222/devtools/browser/xxx act --prompt "click the button"
+npx @midscene/web@1 --cdp ws://localhost:9222/devtools/browser/xxx take_screenshot
+npx @midscene/web@1 --cdp ws://localhost:9222/devtools/browser/xxx disconnect
+```
+
+You can also set the endpoint via environment variable to avoid repeating it:
+
+```bash
+export MIDSCENE_CDP_ENDPOINT="ws://localhost:9222/devtools/browser/xxx"
+npx @midscene/web@1 --cdp connect --url https://example.com
+```
+
+In CDP mode, the browser is managed externally — `disconnect` releases the connection but does NOT close the browser. There is no `close` command in CDP mode.
 
 ## Commands
 
