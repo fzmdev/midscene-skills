@@ -4,15 +4,12 @@ description: |
   Vision-driven desktop automation using Midscene. Control your desktop (macOS, Windows, Linux) with natural language commands.
   Operates entirely from screenshots — no DOM or accessibility labels required. Can interact with all visible elements on screen regardless of technology stack.
 
-  ⚠️ WARNING: This skill takes over the user's real mouse and keyboard. The user cannot use their computer while automation is running.
-  → For web apps, prefer the "Browser Automation" skill instead — it runs in a headless browser and does NOT interfere with the user's mouse/keyboard.
-  → Only use this skill for desktop-native applications (Electron, Qt, native macOS/Windows/Linux apps) that cannot be tested in a browser.
+  ⚠️ Takes over the user's real mouse and keyboard. For web apps, prefer "Browser Automation" instead.
+  Only use this for desktop-native apps (Electron, Qt, native macOS/Windows/Linux) that cannot run in a browser.
 
   Triggers: open app, press key, desktop, computer, click on screen, type text, screenshot desktop,
   launch application, switch window, desktop automation, control computer, mouse click, keyboard shortcut,
-  screen capture, find on screen, read screen, verify window, close app, minimize window, maximize window,
-  test desktop app, verify native app works, QA desktop feature, try the desktop app,
-  launch and test native app, end-to-end test desktop, test Electron app, test native UI
+  screen capture, find on screen, read screen, verify window, close app, test Electron app
 
   Powered by Midscene.js (https://midscenejs.com)
 allowed-tools:

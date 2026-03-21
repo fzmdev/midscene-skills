@@ -10,14 +10,10 @@ description: |
   - Browse, navigate, or open web pages
   - Scrape, extract, or collect data from websites
   - Fill out forms, click buttons, or interact with web elements
-  - Verify, validate, or test frontend UI behavior
+  - Verify, validate, test, or QA frontend UI behavior
   - Take screenshots of web pages
   - Automate multi-step web workflows
-  - Run browser automation or check website content
-  - Test the web app, verify it works, QA the frontend
-  - Check if the page looks correct, end-to-end test the website
-  - Test what was just built, validate the UI, see if it works in browser
-
+  - Test what was just built, see if it works in browser
 
   Powered by Midscene.js (https://midscenejs.com)
 allowed-tools:
