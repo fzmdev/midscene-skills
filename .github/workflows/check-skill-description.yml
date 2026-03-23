@@ -1,0 +1,19 @@
+name: Check Skill Description Length
+
+on:
+  pull_request:
+    paths:
+      - "skills/**/SKILL.md"
+
+jobs:
+  check-description-length:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check skill description length (max 1200 chars)
+        run: node scripts/check-skill-description-length.mjs
