@@ -117,7 +117,7 @@ You can also set the endpoint via environment variable to avoid repeating it:
 
 ```bash
 export MIDSCENE_CDP_ENDPOINT="ws://localhost:9222/devtools/browser/xxx"
-npx @midscene/web@1 --cdp connect --url https://example.com
+npx @midscene/web@1 --cdp $MIDSCENE_CDP_ENDPOINT connect --url https://example.com
 ```
 
 In CDP mode, the browser is managed externally — `disconnect` releases the connection but does NOT close the browser. There is no `close` command in CDP mode.
