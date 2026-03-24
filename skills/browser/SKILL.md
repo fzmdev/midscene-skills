@@ -1,12 +1,10 @@
 ---
 name: browser-automation
 description: |
-  Vision-driven browser automation using Midscene. Operates entirely from screenshots — no DOM or accessibility labels required. Can interact with all visible elements on screen regardless of technology stack.
+  Vision-driven browser automation using Midscene. Operates from screenshots — no DOM or accessibility labels needed.
 
-  Runs in a headless Puppeteer browser — does NOT take over the user's mouse or keyboard. The user can continue using their computer while automation runs.
-  This is the preferred skill for testing web applications. Only use "Desktop Computer Automation" for native desktop apps.
-
-  Also supports CDP (Chrome DevTools Protocol) mode — connect to an existing Chrome browser started with --remote-debugging-port, including remote browsers in Docker or CI environments.
+  Runs in headless Puppeteer — does NOT take over the user's mouse or keyboard.
+  Also supports CDP mode to connect to an existing Chrome via remote debugging.
 
   Use this skill when the user wants to:
   - Browse, navigate, or open web pages
@@ -16,8 +14,7 @@ description: |
   - Take screenshots of web pages
   - Automate multi-step web workflows
   - Test what was just built, see if it works in browser
-  - Connect to an existing Chrome via CDP, DevTools Protocol, or remote debugging
-  - Automate a remote browser in Docker, cloud, or CI environment
+  - Connect to Chrome via CDP, DevTools Protocol, or remote debugging
 
   Powered by Midscene.js (https://midscenejs.com)
 allowed-tools:
