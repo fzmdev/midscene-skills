@@ -25,9 +25,9 @@ allowed-tools:
 
 Automate HarmonyOS NEXT devices using `npx @midscene/harmony@1`. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
-## What This Action Space Covers
+## What `act` Can Do
 
-On HarmonyOS, the available actions include opening an app or web link; tapping, double-tapping, long-pressing, typing, clearing text, scrolling, dragging items, pressing keys, going Back, going Home, opening recent apps, taking screenshots, and running a raw HarmonyOS shell command when lower-level device control is needed. Two-finger zoom is not available because the underlying HarmonyOS automation layer does not expose multi-touch input.
+Inside a single `act` call on HarmonyOS, Midscene can tap, double-tap, long-press, type, clear text, scroll, drag items, press keys, and use system navigation such as Back, Home, or recent apps while working from the current visible screen. Two-finger zoom is not available because the underlying HarmonyOS automation layer does not expose multi-touch input.
 
 ## Prerequisites
 

@@ -25,9 +25,9 @@ allowed-tools:
 
 Automate iOS devices using `npx @midscene/ios@1`. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
-## What This Action Space Covers
+## What `act` Can Do
 
-On iOS, the available actions include opening an app, web page, deep link, or phone/mail link; tapping, double-tapping, long-pressing, typing, clearing text, scrolling, dragging items, zooming with two fingers, pressing keys, going Home, opening the app switcher, taking screenshots, and sending a direct low-level device request when you need control beyond the normal UI flow.
+Inside a single `act` call on iOS, Midscene can tap, double-tap, long-press, type, clear text, scroll, drag items, zoom with two fingers, press keys, and use system navigation such as Home or the app switcher while working from the current visible screen.
 
 ## Prerequisites
 

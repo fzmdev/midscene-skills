@@ -31,9 +31,9 @@ allowed-tools:
 
 Automate web browsing using `npx @midscene/web@1`. Launches a headless Chrome via Puppeteer that **persists across CLI calls** — no session loss between commands. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
-## What This Action Space Covers
+## What `act` Can Do
 
-In the browser, this action space covers opening a page in the current tab, clicking, right-clicking, double-clicking, hovering, typing or clearing text, pressing keys, scrolling, dragging, long-pressing, going back, reloading, taking screenshots, and, when touch input is enabled, handling swipe or pinch-style interactions on touch-oriented pages.
+Inside a single `act` call in the browser, Midscene can click, right-click, double-click, hover, type or clear text, press keys, scroll, drag, long-press, and continue through multi-step page flows based on what is currently visible. When touch input is enabled, it can also handle swipe- or pinch-style interactions on touch-oriented pages.
 
 ## When to Use
 

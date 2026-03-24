@@ -26,9 +26,9 @@ allowed-tools:
 
 Automate Android devices using `npx @midscene/android@1`. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
-## What This Action Space Covers
+## What `act` Can Do
 
-On Android, the available actions include opening an app, activity, or web link; tapping, double-tapping, long-pressing, typing, clearing text, scrolling or swiping in any direction, pulling to refresh, dragging items, zooming with two fingers, pressing keys, going Back, going Home, opening recent apps, taking screenshots, and running a raw Android shell command when lower-level device control is needed.
+Inside a single `act` call on Android, Midscene can tap, double-tap, long-press, type, clear text, scroll or swipe in any direction, pull to refresh, drag items, zoom with two fingers, press keys, and use system navigation such as Back, Home, or recent apps while working from the current visible screen.
 
 ## Prerequisites
 
