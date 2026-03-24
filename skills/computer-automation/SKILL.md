@@ -27,6 +27,10 @@ allowed-tools:
 
 Control your desktop (macOS, Windows, Linux) using `npx @midscene/computer@1`. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
+## What `act` Can Do
+
+Inside a single `act` call on desktop, Midscene can move the mouse, click, double-click, right-click, drag items, type or clear text, scroll, press single keys or keyboard shortcuts, and work through multi-step interactions on whatever is visible on the selected display.
+
 ## Prerequisites
 
 Midscene requires models with strong visual grounding capabilities. The following environment variables must be configured — either as system environment variables or in a `.env` file in the current working directory (Midscene loads `.env` automatically):

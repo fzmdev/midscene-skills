@@ -25,6 +25,10 @@ allowed-tools:
 
 Automate iOS devices using `npx @midscene/ios@1`. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
+## What `act` Can Do
+
+Inside a single `act` call on iOS, Midscene can tap, double-tap, long-press, type, clear text, scroll, drag items, zoom with two fingers, press keys, and use system navigation such as Home or the app switcher while working from the current visible screen.
+
 ## Prerequisites
 
 Midscene requires models with strong visual grounding capabilities. The following environment variables must be configured — either as system environment variables or in a `.env` file in the current working directory (Midscene loads `.env` automatically):
@@ -79,6 +83,20 @@ If the model is not configured, ask the user to set it up. See [Model Configurat
 ```bash
 npx @midscene/ios@1 connect
 ```
+
+### Launch an App, URL, or Deep Link
+
+Use the built-in launch capability when you want to start from a known app or route before the rest of the task. Give it the most specific target you have, such as a bundle ID, web URL, deep link, or phone/mail link. Typical targets include `com.apple.Preferences`, `https://www.apple.com`, `myapp://profile/user/123`, and `tel:+1234567890`.
+
+### Send a Direct Device Request
+
+Use this when the task needs lower-level device control instead of a normal visible UI interaction:
+
+```bash
+npx @midscene/ios@1 runwdarequest --method GET --endpoint /wda/screen
+```
+
+This does not run an ADB command. On iOS, the underlying operation is an HTTP request to WebDriverAgent, typically `GET http://<wdaHost>:<wdaPort>/session/<sessionId>/wda/screen`.
 
 ### Take Screenshot
 

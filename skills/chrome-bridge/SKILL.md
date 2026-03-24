@@ -32,6 +32,10 @@ allowed-tools:
 
 Automate the user's real Chrome browser via the Midscene Chrome Extension (Bridge mode), preserving cookies, sessions, and login state. You (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
+## What `act` Can Do
+
+Inside a single `act` call in Chrome Bridge mode, Midscene can click, right-click, double-click, hover, type or clear text, press keys, scroll, drag, long-press, and continue through multi-step page flows in the user's real Chrome session based on what is currently visible. When touch input is enabled, it can also handle swipe- or pinch-style interactions on touch-oriented pages.
+
 ## Command Format
 
 **CRITICAL — Every command MUST follow this EXACT format. Do NOT modify the command prefix.**

@@ -26,6 +26,10 @@ allowed-tools:
 
 Automate Android devices using `npx @midscene/android@1`. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
+## What `act` Can Do
+
+Inside a single `act` call on Android, Midscene can tap, double-tap, long-press, type, clear text, scroll or swipe in any direction, pull to refresh, drag items, zoom with two fingers, press keys, and use system navigation such as Back, Home, or recent apps while working from the current visible screen.
+
 ## Prerequisites
 
 Midscene requires models with strong visual grounding capabilities. The following environment variables must be configured — either as system environment variables or in a `.env` file in the current working directory (Midscene loads `.env` automatically):
@@ -81,6 +85,26 @@ If the model is not configured, ask the user to set it up. See [Model Configurat
 npx @midscene/android@1 connect
 npx @midscene/android@1 connect --deviceId emulator-5554
 ```
+
+### Launch an App or URL
+
+Use the dedicated launch step when you want a deterministic starting point before the rest of the task:
+
+```bash
+npx @midscene/android@1 launch --uri https://www.ebay.com
+npx @midscene/android@1 launch --uri com.android.settings
+npx @midscene/android@1 launch --uri com.android.settings/.Settings
+```
+
+### Run a Raw Android Shell Command
+
+Use this when the task needs lower-level device control that is not best expressed as a visible UI interaction:
+
+```bash
+npx @midscene/android@1 runadbshell --command "dumpsys battery"
+```
+
+This is forwarded to `adb shell` on the connected device. In practice, the underlying command is `adb -s <deviceId> shell dumpsys battery` and some environments may also include the default ADB server port, such as `adb -P 5037 -s <deviceId> shell dumpsys battery`.
 
 ### Take Screenshot
 
