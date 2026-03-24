@@ -97,27 +97,35 @@ If the model is not configured, ask the user to set it up. See [Model Configurat
 
 ## CDP Mode (Connect to Existing Browser)
 
-If the user provides a CDP/WebSocket endpoint or mentions "remote debugging", "CDP", or "DevTools Protocol", use CDP mode by adding `--cdp <ws-endpoint>` to every command:
+If the user provides a CDP/WebSocket endpoint or mentions "remote debugging", "CDP", or "DevTools Protocol", use CDP mode via the `MIDSCENE_CDP_ENDPOINT` environment variable. Set it once and all subsequent commands will automatically connect to the user's browser:
 
 ```bash
-# Get the CDP endpoint from a Chrome started with --remote-debugging-port=9222
+export MIDSCENE_CDP_ENDPOINT="ws://localhost:9222/devtools/browser"
+npx @midscene/web@1 connect --url https://example.com
+npx @midscene/web@1 act --prompt "click the button"
+npx @midscene/web@1 take_screenshot
+npx @midscene/web@1 disconnect
+```
+
+### How to find the CDP endpoint
+
+**Method A — Chrome Settings (recommended, no restart needed):**
+Open `chrome://inspect` in Chrome, enable "Allow remote debugging", note the server address (e.g., `127.0.0.1:9222`). The endpoint is `ws://127.0.0.1:9222/devtools/browser`.
+
+**Method B — Command-line flag (traditional):**
+```bash
+# Quit Chrome first, then launch with:
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+
+# Get the full WebSocket endpoint:
 curl -s http://localhost:9222/json/version | grep webSocketDebuggerUrl
-
-# Then use --cdp with every command
-npx @midscene/web@1 --cdp ws://localhost:9222/devtools/browser/xxx connect --url https://example.com
-npx @midscene/web@1 --cdp ws://localhost:9222/devtools/browser/xxx act --prompt "click the button"
-npx @midscene/web@1 --cdp ws://localhost:9222/devtools/browser/xxx take_screenshot
-npx @midscene/web@1 --cdp ws://localhost:9222/devtools/browser/xxx disconnect
 ```
 
-You can also set the endpoint via environment variable to avoid repeating it:
+### Important notes for CDP mode
 
-```bash
-export MIDSCENE_CDP_ENDPOINT="ws://localhost:9222/devtools/browser/xxx"
-npx @midscene/web@1 --cdp $MIDSCENE_CDP_ENDPOINT connect --url https://example.com
-```
-
-In CDP mode, the browser is managed externally — `disconnect` releases the connection but does NOT close the browser. There is no `close` command in CDP mode.
+- The browser is managed externally — `disconnect` releases the connection but does NOT close the browser. There is no `close` command in CDP mode.
+- In CDP mode, `connect --url` navigates the **existing active tab** to the URL instead of opening a new tab. This ensures the user sees the navigation happen in their browser.
+- `connect` without `--url` attaches to the current active tab without navigating.
 
 ## Commands
 
