@@ -26,6 +26,10 @@ allowed-tools:
 
 Automate Android devices using `npx @midscene/android@1`. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
+## What This Action Space Covers
+
+On Android, the available actions include opening an app, activity, or web link; tapping, double-tapping, long-pressing, typing, clearing text, scrolling or swiping in any direction, pulling to refresh, dragging items, zooming with two fingers, pressing keys, going Back, going Home, opening recent apps, taking screenshots, and running a raw Android shell command when lower-level device control is needed.
+
 ## Prerequisites
 
 Midscene requires models with strong visual grounding capabilities. The following environment variables must be configured — either as system environment variables or in a `.env` file in the current working directory (Midscene loads `.env` automatically):
@@ -80,6 +84,24 @@ If the model is not configured, ask the user to set it up. See [Model Configurat
 ```bash
 npx @midscene/android@1 connect
 npx @midscene/android@1 connect --deviceId emulator-5554
+```
+
+### Launch an App or URL
+
+Use the dedicated launch step when you want a deterministic starting point before the rest of the task:
+
+```bash
+npx @midscene/android@1 launch --uri https://www.ebay.com
+npx @midscene/android@1 launch --uri com.android.settings
+npx @midscene/android@1 launch --uri com.android.settings/.Settings
+```
+
+### Run a Raw Android Shell Command
+
+Use this when the task needs lower-level device control that is not best expressed as a visible UI interaction:
+
+```bash
+npx @midscene/android@1 runadbshell --command "dumpsys battery"
 ```
 
 ### Take Screenshot

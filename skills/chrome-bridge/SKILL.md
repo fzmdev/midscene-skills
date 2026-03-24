@@ -32,6 +32,10 @@ allowed-tools:
 
 Automate the user's real Chrome browser via the Midscene Chrome Extension (Bridge mode), preserving cookies, sessions, and login state. You (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
+## What This Action Space Covers
+
+In Chrome Bridge mode, this action space covers opening a page in the current tab, clicking, right-clicking, double-clicking, hovering, typing or clearing text, pressing keys, scrolling, dragging, long-pressing, going back, reloading, taking screenshots, and, when touch input is enabled, handling swipe or pinch-style interactions on touch-oriented pages in the user's real Chrome session.
+
 ## Command Format
 
 **CRITICAL — Every command MUST follow this EXACT format. Do NOT modify the command prefix.**
