@@ -97,19 +97,18 @@ If the model is not configured, ask the user to set it up. See [Model Configurat
 
 ## CDP Mode (Connect to Existing Browser)
 
-If the user provides a CDP/WebSocket endpoint or mentions "remote debugging", "CDP", or "DevTools Protocol", use CDP mode via the `MIDSCENE_CDP_ENDPOINT` environment variable. Set it once and all subsequent commands will automatically connect to the user's browser:
+If the user provides a CDP/WebSocket endpoint or mentions "remote debugging", "CDP", or "DevTools Protocol", use CDP mode by adding `--cdp <ws-endpoint>` to every command:
 
 ```bash
-export MIDSCENE_CDP_ENDPOINT="ws://localhost:9222/devtools/browser"
-npx @midscene/web@1 connect --url https://example.com
-npx @midscene/web@1 act --prompt "click the button"
-npx @midscene/web@1 take_screenshot
-npx @midscene/web@1 disconnect
+npx @midscene/web@1 connect --cdp ws://127.0.0.1:9222/devtools/browser --url https://example.com
+npx @midscene/web@1 act --cdp ws://127.0.0.1:9222/devtools/browser --prompt "click the button"
+npx @midscene/web@1 take_screenshot --cdp ws://127.0.0.1:9222/devtools/browser
+npx @midscene/web@1 disconnect --cdp ws://127.0.0.1:9222/devtools/browser
 ```
 
 ### How to find the CDP endpoint
 
-**Method A — Chrome Settings (recommended, no restart needed):**
+**Method A — Chrome Settings (no restart needed):**
 Open `chrome://inspect` in Chrome, enable "Allow remote debugging", note the server address (e.g., `127.0.0.1:9222`). The endpoint is `ws://127.0.0.1:9222/devtools/browser`.
 
 **Method B — Command-line flag (traditional):**
