@@ -104,6 +104,8 @@ Use this when the task needs lower-level device control that is not best express
 npx @midscene/android@1 runadbshell --command "dumpsys battery"
 ```
 
+This is forwarded to `adb shell` on the connected device. In practice, the underlying command is `adb -s <deviceId> shell dumpsys battery` and some environments may also include the default ADB server port, such as `adb -P 5037 -s <deviceId> shell dumpsys battery`.
+
 ### Take Screenshot
 
 ```bash

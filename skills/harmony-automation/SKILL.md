@@ -117,6 +117,8 @@ Use this when the task needs lower-level device control that is not best express
 npx @midscene/harmony@1 runhdcshell --command "hidumper -s RenderService -a screen"
 ```
 
+This is forwarded to `hdc shell` on the connected device. In practice, the underlying command is `hdc -t <deviceId> shell hidumper -s RenderService -a screen`.
+
 ### Take Screenshot
 
 ```bash

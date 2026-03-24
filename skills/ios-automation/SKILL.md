@@ -96,6 +96,8 @@ Use this when the task needs lower-level device control instead of a normal visi
 npx @midscene/ios@1 runwdarequest --method GET --endpoint /wda/screen
 ```
 
+This does not run an ADB command. On iOS, the underlying operation is an HTTP request to WebDriverAgent, typically `GET http://<wdaHost>:<wdaPort>/session/<sessionId>/wda/screen`.
+
 ### Take Screenshot
 
 ```bash
