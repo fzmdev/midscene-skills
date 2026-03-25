@@ -4,7 +4,7 @@ description: |
   Vision-driven browser automation using Midscene. Operates from screenshots — no DOM or accessibility labels needed.
 
   Runs in headless Puppeteer — does NOT take over the user's mouse or keyboard.
-  Also supports CDP mode to connect to an existing Chrome via remote debugging.
+  Also supports CDP mode and Bridge mode to connect to an existing Chrome.
 
   Use this skill when the user wants to:
   - Browse, navigate, or open web pages
@@ -15,6 +15,7 @@ description: |
   - Automate multi-step web workflows
   - Test what was just built, see if it works in browser
   - Connect to Chrome via CDP, DevTools Protocol, or remote debugging
+  - Connect to user's Chrome browser, control my browser, operate my Chrome
 
   Powered by Midscene.js (https://midscenejs.com)
 allowed-tools:
@@ -30,7 +31,7 @@ allowed-tools:
 > 3. **Allow enough time for each command to complete.** Midscene commands involve AI inference and screen interaction, which can take longer than typical shell commands. A typical command needs about 1 minute; complex `act` commands may need even longer.
 > 4. **Always report task results before finishing.** After completing the automation task, you MUST proactively summarize the results to the user — including key data found, actions completed, screenshots taken, and any relevant findings. Never silently end after the last automation step; the user expects a complete response in a single interaction.
 
-Automate web browsing using `npx @midscene/web@1`. By default, launches a headless Chrome via Puppeteer that **persists across CLI calls** — no session loss between commands. Also supports **CDP mode** to connect to an existing Chrome browser. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
+Automate web browsing using `npx @midscene/web@1`. By default, launches a headless Chrome via Puppeteer that **persists across CLI calls** — no session loss between commands. Also supports **CDP mode** and **Bridge mode** to connect to an existing Chrome browser. Each CLI command maps directly to an MCP tool — you (the AI agent) act as the brain, deciding which actions to take based on screenshots.
 
 ## What `act` Can Do
 
@@ -38,15 +39,17 @@ Inside a single `act` call in the browser, Midscene can click, right-click, doub
 
 ## When to Use
 
-Use this skill when:
-- The user wants to browse or navigate to a specific URL
-- You need to scrape, extract, or collect data from websites
-- You want to verify or test frontend UI behavior
-- The user wants screenshots of web pages
+This skill has three modes. Choose based on the user's intent:
 
-If you need to preserve login sessions or work with the user's existing browser tabs, use the **Chrome Bridge Automation** skill instead.
+### Mode Selection Guide
 
-If the user has a Chrome browser already running with `--remote-debugging-port` (or provides a CDP WebSocket endpoint), use **CDP mode** (see below).
+| Mode | When to use | How it works |
+|------|------------|-------------|
+| **Puppeteer (default)** | User wants to browse a URL, scrape data, test UI — no need for their own browser | Launches a new headless Chrome, isolated from user's browser |
+| **CDP mode** | User says "connect to my Chrome", "control my browser", "CDP", "remote debugging", or wants to operate their existing browser | Connects to user's Chrome via DevTools Protocol. Requires remote debugging enabled (`chrome://inspect` > "Allow remote debugging"). No extension needed |
+| **Bridge mode** | User explicitly mentions "bridge", "extension", or has Midscene Chrome Extension installed and prefers to use it | Connects to user's Chrome via the Midscene Chrome Extension |
+
+**CDP vs Bridge**: Both control the user's real Chrome with login sessions preserved. CDP only needs a Chrome setting toggle; Bridge needs a Chrome Extension installed. If the user doesn't specify, prefer **CDP mode** as it has fewer prerequisites.
 
 ## Prerequisites
 
@@ -97,7 +100,9 @@ If the model is not configured, ask the user to set it up. See [Model Configurat
 
 ## CDP Mode (Connect to Existing Browser)
 
-If the user provides a CDP/WebSocket endpoint or mentions "remote debugging", "CDP", or "DevTools Protocol", use CDP mode by adding `--cdp <ws-endpoint>` to every command:
+Use CDP mode to control the user's existing Chrome browser. The default CDP endpoint is `ws://127.0.0.1:9222/devtools/browser` (port 9222 is Chrome's standard remote debugging port). If the user specifies a different port, replace 9222 accordingly.
+
+Add `--cdp <ws-endpoint>` to every command:
 
 ```bash
 npx @midscene/web@1 connect --cdp ws://127.0.0.1:9222/devtools/browser --url https://example.com
@@ -106,25 +111,31 @@ npx @midscene/web@1 take_screenshot --cdp ws://127.0.0.1:9222/devtools/browser
 npx @midscene/web@1 disconnect --cdp ws://127.0.0.1:9222/devtools/browser
 ```
 
-### How to find the CDP endpoint
-
-**Method A — Chrome Settings (no restart needed):**
-Open `chrome://inspect` in Chrome, enable "Allow remote debugging", note the server address (e.g., `127.0.0.1:9222`). The endpoint is `ws://127.0.0.1:9222/devtools/browser`.
-
-**Method B — Command-line flag (traditional):**
-```bash
-# Quit Chrome first, then launch with:
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
-
-# Get the full WebSocket endpoint:
-curl -s http://localhost:9222/json/version | grep webSocketDebuggerUrl
-```
-
 ### Important notes for CDP mode
 
 - The browser is managed externally — `disconnect` releases the connection but does NOT close the browser. There is no `close` command in CDP mode.
-- In CDP mode, `connect --url` navigates the **existing active tab** to the URL instead of opening a new tab. This ensures the user sees the navigation happen in their browser.
+- In CDP mode, `connect --url` navigates the **existing active tab** instead of opening a new tab.
 - `connect` without `--url` attaches to the current active tab without navigating.
+- If connection fails, ask the user to enable remote debugging: open `chrome://inspect` in Chrome and turn on "Allow remote debugging".
+
+## Bridge Mode (Connect via Chrome Extension)
+
+Use Bridge mode when the user explicitly mentions "bridge", "extension", or has the Midscene Chrome Extension installed. Add `--bridge` to every command:
+
+```bash
+npx @midscene/web@1 --bridge connect --url https://example.com
+npx @midscene/web@1 --bridge act --prompt "click the button"
+npx @midscene/web@1 --bridge take_screenshot
+npx @midscene/web@1 --bridge disconnect
+```
+
+### Important notes for Bridge mode
+
+- The user must have Chrome open with the Midscene Extension installed and enabled.
+- The Midscene Extension can be installed from the Chrome Web Store: https://chromewebstore.google.com/detail/midscenejs/gbldofcpkknbggpkmbdaefngejllnief
+- Check that the "bridge mode" indicator in the extension shows "Listening" status.
+- `disconnect` only closes the CLI-side bridge connection, not the browser or tabs.
+- See the [Bridge Mode documentation](https://midscenejs.com/bridge-mode-by-chrome-extension.html).
 
 ## Commands
 
@@ -165,7 +176,7 @@ npx @midscene/web@1 disconnect
 
 ### Close Browser
 
-Close the browser completely when finished:
+Close the browser completely when finished (Puppeteer mode only):
 
 ```bash
 npx @midscene/web@1 close
