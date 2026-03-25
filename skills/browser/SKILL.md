@@ -46,10 +46,28 @@ This skill has three modes. Choose based on the user's intent:
 | Mode | When to use | How it works |
 |------|------------|-------------|
 | **Puppeteer (default)** | User wants to browse a URL, scrape data, test UI — no need for their own browser | Launches a new headless Chrome, isolated from user's browser |
-| **CDP mode** | User says "connect to my Chrome", "control my browser", "CDP", "remote debugging", or wants to operate their existing browser | Connects to user's Chrome via DevTools Protocol. Requires remote debugging enabled (`chrome://inspect` > "Allow remote debugging"). No extension needed |
+| **CDP mode** | User says "connect to my Chrome", "control my browser", "CDP", "remote debugging", or wants to operate their existing browser. Also use when the task **implicitly requires login state** (e.g., "check my orders", "open my dashboard", "look at my account") | Connects to user's Chrome via DevTools Protocol. Requires remote debugging enabled (`chrome://inspect` > "Allow remote debugging"). No extension needed |
 | **Bridge mode** | User explicitly mentions "bridge", "extension", or has Midscene Chrome Extension installed and prefers to use it | Connects to user's Chrome via the Midscene Chrome Extension |
 
 **CDP vs Bridge**: Both control the user's real Chrome with login sessions preserved. CDP only needs a Chrome setting toggle; Bridge needs a Chrome Extension installed. If the user doesn't specify, prefer **CDP mode** as it has fewer prerequisites.
+
+### Precheck: detect available connection modes
+
+Before using CDP or Bridge mode, run a quick precheck to verify the target is reachable. This avoids long timeouts when the user hasn't enabled remote debugging or installed the extension.
+
+```bash
+# CDP precheck (port 9222, 2s timeout) — returns "101" if available
+curl -s --max-time 2 -o /dev/null -w "%{http_code}" -H "Upgrade: websocket" -H "Connection: Upgrade" -H "Sec-WebSocket-Version: 13" -H "Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==" http://127.0.0.1:9222/devtools/browser
+
+# Bridge precheck (port 3766, 2s timeout) — returns "200" or "400" if extension is listening
+curl -s --max-time 2 -o /dev/null -w "%{http_code}" http://127.0.0.1:3766/socket.io/?EIO=4&transport=polling
+```
+
+**How to use precheck results:**
+- CDP returns `101` → CDP mode is available, use `--cdp`
+- Bridge returns `200` or `400` → Bridge extension is listening, use `--bridge`
+- Both fail → fall back to Puppeteer mode, or ask the user to enable remote debugging
+- Both available and user didn't specify → prefer CDP
 
 ## Prerequisites
 
