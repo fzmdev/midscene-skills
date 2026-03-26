@@ -9,7 +9,7 @@
 - Natural-language driven UI control
 - Built on [Midscene.js](https://midscenejs.com)'s vision-based automation capabilities — Operates entirely from screenshots, making cross-platform support reliable
 - This repository contains Skills for the following platforms:
-  - Browser (Puppeteer, headless Chrome): [`skills/browser`](skills/browser)
+  - Browser (Puppeteer, headless Chrome; also supports CDP connection): [`skills/browser`](skills/browser)
   - Chrome Bridge (user's own Chrome browser): [`skills/chrome-bridge`](skills/chrome-bridge)
   - Desktop (macOS, Windows, Linux): [`skills/computer-automation`](skills/computer-automation)
   - Android (controlled via ADB): [`skills/android-automation`](skills/android-automation)
