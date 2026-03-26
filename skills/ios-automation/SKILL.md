@@ -175,3 +175,11 @@ npx @midscene/ios@1 take_screenshot
 **Solution:**
 - Check `.env` file contains `MIDSCENE_MODEL_API_KEY=<your-key>`.
 - See https://midscenejs.com/zh/model-common-config.html for details.
+
+
+### `@midscene/*` Dependency Version Outdated
+**Symptom:** Unexpected behavior, missing features, or version mismatch errors.
+**Solution:**
+- Check local versions: `npm ls @midscene/ios @midscene/core @midscene/shared` (or `pnpm why @midscene/ios`).
+- Check latest versions: `npm view @midscene/ios version`, `npm view @midscene/core version`, `npm view @midscene/shared version`.
+- Upgrade dependencies: `npm i @midscene/ios@latest @midscene/core@latest @midscene/shared@latest`.

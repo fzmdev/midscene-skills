@@ -198,3 +198,9 @@ If `take_screenshot` returns a completely black image, the Mac is likely **locke
 1. Take a screenshot to verify the element is actually visible
 2. Use more specific descriptions (include color, position, surrounding text)
 3. Ensure the element is not hidden behind another window
+
+
+### `@midscene/*` Dependency Version Outdated
+- Check local versions: `npm ls @midscene/computer @midscene/core @midscene/shared` (or `pnpm why @midscene/computer`).
+- Check latest versions: `npm view @midscene/computer version`, `npm view @midscene/core version`, `npm view @midscene/shared version`.
+- Upgrade dependencies: `npm i @midscene/computer@latest @midscene/core@latest @midscene/shared@latest`.

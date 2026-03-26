@@ -203,4 +203,5 @@ npx @midscene/harmony@1 take_screenshot
 | **Device not listed** | Check USB connection, ensure USB debugging is enabled in Developer Options, and run `hdc list targets`. |
 | **Command timeout** | The device screen may be off or locked. Wake the device and unlock it. |
 | **API key error** | Check `.env` file contains `MIDSCENE_MODEL_API_KEY=<your-key>`. See [Model Configuration](https://midscenejs.com/zh/model-common-config.html). |
+| **`@midscene/*` dependency version is outdated** | Check local versions with `npm ls @midscene/harmony @midscene/core @midscene/shared` (or `pnpm why @midscene/harmony`). Compare with latest via `npm view @midscene/harmony version`, `npm view @midscene/core version`, and `npm view @midscene/shared version`. Upgrade if needed: `npm i @midscene/harmony@latest @midscene/core@latest @midscene/shared@latest`. |
 | **Wrong device targeted** | If multiple devices are connected, use `--deviceId <id>` flag with the `connect` command. |
