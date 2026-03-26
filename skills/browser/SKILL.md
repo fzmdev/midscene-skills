@@ -150,9 +150,10 @@ npx @midscene/web@1 --bridge disconnect
 ### Important notes for Bridge mode
 
 - The user must have Chrome open with the Midscene Extension installed and enabled.
-- The Midscene Extension can be installed from the Chrome Web Store: https://chromewebstore.google.com/detail/midscenejs/gbldofcpkknbggpkmbdaefngejllnief
+- Install the extension from Chrome Web Store: https://chromewebstore.google.com/detail/midscenejs/gbldofcpkknbggpkmbdaefngejllnief
 - Check that the "bridge mode" indicator in the extension shows "Listening" status.
 - `disconnect` only closes the CLI-side bridge connection, not the browser or tabs.
+- If the extension is not installed, guide the user to install it or suggest switching to CDP mode instead.
 - See the [Bridge Mode documentation](https://midscenejs.com/bridge-mode-by-chrome-extension.html).
 
 ## Commands
