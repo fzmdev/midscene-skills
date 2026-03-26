@@ -185,6 +185,15 @@ export PATH="/usr/sbin:/usr/bin:/bin:/sbin:$PATH"
 ```
 Then retry the screenshot command.
 
+### macOS: Screenshot Returns a Black Screen
+If `take_screenshot` returns a completely black image, the Mac is likely **locked** (e.g. screen is at the login/lock window). This is a system-level restriction — macOS prohibits capturing the screen contents while the session is locked, so there is no workaround at the application level.
+
+**Recommended fix:** Use a **screensaver** instead of locking the screen. A screensaver keeps the user session active and unlocked, allowing screenshots to capture normally.
+
+1. Open **System Settings > Lock Screen**
+2. Set "Require password after screen saver begins or display is turned off" to a longer delay (or turn it off during automation)
+3. Optionally configure a screensaver under **System Settings > Screen Saver** so the display still dims after inactivity without locking
+
 ### AI Cannot Find the Element
 1. Take a screenshot to verify the element is actually visible
 2. Use more specific descriptions (include color, position, surrounding text)
